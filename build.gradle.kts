@@ -225,19 +225,25 @@ subprojects {
     }
 
     apply(plugin="maven-publish")
-    apply(plugin="signing")
+//    apply(plugin="signing")
 
 
     configure<PublishingExtension> {
 
         repositories {
-            maven {
-                url = uri("https://oss.sonatype.org/service/local/staging/deploy/maven2")
+            maven("https://maven.pkg.github.com/suntrix/firebase-kotlin-sdk") {
                 credentials {
-                    username = project.findProperty("sonatypeUsername") as String? ?: System.getenv("sonatypeUsername")
-                    password = project.findProperty("sonatypePassword") as String? ?: System.getenv("sonatypePassword")
+                    username = project.findProperty("gpr.user") as String? ?: System.getenv("GITHUB_USER")
+                    password = project.findProperty("gpr.token") as String? ?: System.getenv("GITHUB_TOKEN")
                 }
             }
+//            maven {
+//                url = uri("https://oss.sonatype.org/service/local/staging/deploy/maven2")
+//                credentials {
+//                    username = project.findProperty("sonatypeUsername") as String? ?: System.getenv("sonatypeUsername")
+//                    password = project.findProperty("sonatypePassword") as String? ?: System.getenv("sonatypePassword")
+//                }
+//            }
         }
 
         publications.all {
